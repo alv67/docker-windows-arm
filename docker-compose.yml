@@ -2,9 +2,9 @@ version: "3"
 services:
   windows:
     container_name: windows
-    image: dockurr/windows-arm   
-    devices:
-      - /dev/kvm
+    image: alv67/windows-arm:1.0
+    #devices:
+    #  - /dev/kvm
     cap_add:
       - NET_ADMIN
     ports:

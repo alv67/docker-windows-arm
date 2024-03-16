@@ -5,13 +5,19 @@ ARG DEBCONF_NOWARNINGS "yes"
 ARG DEBIAN_FRONTEND "noninteractive"
 ARG DEBCONF_NONINTERACTIVE_SEEN "true"
 
+# We need wimtools from debian unstable, but everything else (above) should be stable only
+RUN echo "deb http://deb.debian.org/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list \
+    && echo 'APT::Default-Release "testing";' > /etc/apt/apt.conf.d/default \
+    && apt-get update && apt-get install -y -t unstable wimtools \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm /etc/apt/sources.list.d/debian-unstable.list 
+
 RUN apt-get update \
     && apt-get --no-install-recommends -y install \
     curl \
     7zip \
     wsdd \
     samba \
-    wimtools \
     dos2unix \
     cabextract \
     genisoimage \
@@ -30,8 +36,8 @@ RUN chmod +x /run/*.sh && chmod +x /usr/sbin/wsdd
 EXPOSE 8006 3389
 VOLUME /storage
 
-ENV RAM_SIZE "4G"
-ENV CPU_CORES "2"
+ENV RAM_SIZE "6G"
+ENV CPU_CORES "4"
 ENV DISK_SIZE "64G"
 ENV VERSION "win11"
 ENV KVM "N"
