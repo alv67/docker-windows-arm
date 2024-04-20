@@ -2,7 +2,7 @@ version: "3"
 services:
   windows:
     container_name: windows
-    image: alv67/windows-arm:1.0
+    image: alv67/windows-arm
     #devices:
     #  - /dev/kvm
     cap_add:
